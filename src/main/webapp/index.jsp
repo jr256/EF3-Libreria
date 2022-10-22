@@ -25,7 +25,7 @@
 		  <h2>Integrantes</h2>
 		  <ul>
 		  		<li>Rubio Guerrero, José Antonio</li>
-		  		<li></li>
+		  		<li>Vallas Herencia, Leticia Elizabet</li>
 		  		<li></li>
 		  		
 		  </ul>		
