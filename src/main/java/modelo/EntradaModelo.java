@@ -2,6 +2,6 @@ package modelo;
 
 import interfaces.ECompraInterface;
 
-public class ECompraModelo implements ECompraInterface {
+public class EntradaModelo implements ECompraInterface {
 
 }

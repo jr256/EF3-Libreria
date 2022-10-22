@@ -11,9 +11,9 @@ import interfaces.ProveedorInterface;
 import interfaces.VentaInterface;
 import modelo.CategoriaModelo;
 import modelo.ClienteModelo;
-import modelo.DetalleECompraModelo;
+import modelo.DetalleEntradaModelo;
 import modelo.DetalleVentaModelo;
-import modelo.ECompraModelo;
+import modelo.EntradaModelo;
 import modelo.EditorialModelo;
 import modelo.LibroModelo;
 import modelo.ProveedorModelo;
@@ -58,12 +58,12 @@ public class MysqlDAOFactory extends DAOFactory{
 
 	@Override
 	public ECompraInterface getECompra() {
-		return new ECompraModelo();
+		return new EntradaModelo();
 	}
 
 	@Override
 	public DetalleECompraInterface getDetalleECompra() {
-		return new DetalleECompraModelo();
+		return new DetalleEntradaModelo();
 	}
 	
 
