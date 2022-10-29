@@ -12,8 +12,10 @@
 <body>
 <div class="container">
 	
-		<%@ include file="snippet/nav.jsp" %>	
+	
+		<%@ include file="snippet/nav.jsp" %>
 		<br>
+		
 		
 		<div class="col-md-6 ">
 			<h2>Bienvenido!</h2>
@@ -26,7 +28,7 @@
 		  <ul>
 		  		<li>Rubio Guerrero, José Antonio</li>
 		  		<li>Vallas Herencia, Leticia Elizabet</li>
-		  		<li></li>
+		  		<li>Carrasco Castro, Segundo Vicente</li>
 		  		
 		  </ul>		
 		</div>
