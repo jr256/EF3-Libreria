@@ -135,7 +135,52 @@ public class ClienteModelo implements ClienteInterface {
 	@Override
 	public List<Cliente> listarClientes() {
 		
-		return null;
+		List<Cliente> listado = new ArrayList<Cliente>();
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rst = null;
+		
+		try {
+			
+			con = MysqlConexion.getConexion();			
+			String sql = "SELECT cli.Id, IdTipoDocumento, tdc.Documento, cli.NumeroDocumento,"
+					+ " cli.Cliente, cli.IdEstado, est.Estado, cli.Direccion FROM cliente AS cli "
+					+ "INNER JOIN tipo_documento AS tdc ON cli.IdTipoDocumento = tdc.Id INNER JOIN "
+					+ "estado AS est ON cli.IdEstado = est.Id;";
+						
+			pst = con.prepareStatement(sql);
+			rst = pst.executeQuery();
+			
+			while (rst.next()) {
+				
+				Cliente cliente = new Cliente();
+				cliente.setId(rst.getString("Id"));
+				cliente.setIdTipoDocumento(rst.getString("IdTipoDocumento"));
+				cliente.setTipoDocumento(rst.getString("Documento"));
+				cliente.setNumeroDocumento(rst.getString("NumeroDocumento"));
+				cliente.setNombreCliente(rst.getString("Cliente"));		
+				cliente.setIdTipoDocumento(rst.getString("IdEstado"));
+				cliente.setEstado(rst.getString("Estado"));
+				cliente.setDireccion(rst.getString("Direccion"));
+				
+				listado.add(cliente);
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rst != null) rst.close();
+				if (pst != null) pst.close();
+				if (con != null) con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return listado;
+		
 	}
 
 	
@@ -143,7 +188,30 @@ public class ClienteModelo implements ClienteInterface {
 	@Override
 	public int eliminarCliente(String idCliente) {
 	
-		return 0;
+		int envio = 0;		
+		Connection con = null;
+		PreparedStatement pst = null;
+		
+		try {
+			
+			con = MysqlConexion.getConexion();			
+			String sql = "DELETE FROM cliente WHERE Id = ?";
+			pst = con.prepareStatement(sql);
+			pst.setString(1, idCliente);			
+			envio = pst.executeUpdate();
+						
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pst != null) pst.close();
+				if (con != null) con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return envio;
 	}
 	
 	
@@ -151,7 +219,39 @@ public class ClienteModelo implements ClienteInterface {
 	@Override
 	public int editarCliente(Cliente cliente) {
 		
-		return 0;
+		int envio = 0;
+		Connection con = null;
+		PreparedStatement pst = null;
+		
+		try {
+			
+			con = MysqlConexion.getConexion();			
+			String mysql = "UPDATE cliente SET IdTipoDocumento = ?, NumeroDocumento = ?, "
+					+ "Cliente = ?, IdEstado = ?, Direccion = ? WHERE Id = ?";
+			pst = con.prepareStatement(mysql);
+			
+			pst.setString(1, cliente.getIdTipoDocumento());
+			pst.setString(2, cliente.getNumeroDocumento());
+			pst.setString(3, cliente.getNombreCliente());
+			pst.setString(4, cliente.getIdEstado());
+			pst.setString(5, cliente.getDireccion());
+			pst.setString(6, cliente.getId());
+						
+			envio = pst.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pst != null) pst.close();
+				if (con != null) con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return envio;
+		
 	}
 	
 	
@@ -159,7 +259,48 @@ public class ClienteModelo implements ClienteInterface {
 	@Override
 	public Cliente obtenerCliente(String idCliente) {
 		
-		return null;
+		Cliente cliente = null;
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rst = null;
+		
+		try {
+			
+			con = MysqlConexion.getConexion();
+			String mysql = "SELECT cli.Id, IdTipoDocumento, tdc.Documento, cli.NumeroDocumento,"
+					+ " cli.Cliente, cli.IdEstado, est.Estado, cli.Direccion FROM cliente AS cli "
+					+ "INNER JOIN tipo_documento AS tdc ON cli.IdTipoDocumento = tdc.Id INNER JOIN "
+					+ "estado AS est ON cli.IdEstado = est.Id WHERE Id = ?;";
+			pst = con.prepareStatement(mysql);
+			pst.setString(1, idCliente);			
+			rst = pst.executeQuery();
+			
+			if(rst.next()) {
+				
+				cliente = new Cliente();				
+				cliente.setId(rst.getString("Id"));
+				cliente.setIdTipoDocumento(rst.getString("IdTipoDocumento"));
+				cliente.setTipoDocumento(rst.getString("TipoDocumento"));
+				cliente.setNumeroDocumento(rst.getString("NumeroDocumento"));
+				cliente.setNombreCliente(rst.getString("Cliente"));
+				cliente.setIdEstado(rst.getString("IdEstado"));
+				cliente.setEstado(rst.getString("Estado"));
+				cliente.setDireccion(rst.getString("Direccion"));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rst != null) rst.close();
+				if (pst != null) pst.close();
+				if (con != null) con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return cliente;
+		
 	}
 
 
