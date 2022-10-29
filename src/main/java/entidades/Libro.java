@@ -4,86 +4,71 @@ import java.sql.Date;
 
 public class Libro {
 	
-	private int id;
-	private String titulo;
-	private String isbn;
-	private String autor;
-	private int idEditorial;
-	private String editorial;//
-	private Date fechaPublicacion;
-	private int edicion;
-	private double precio;
-	private int idCategoria;
-	private String categoria;//
+	private int Id;
+	private String Titulo;
+	private String Isbn;
+	private String Autor;
+	private int IdEditorial;
+	private Date FechaPublicacion;
+	private double Precio;
+	private int IdCategoria;
+	private int Stock;
 	private int idEstado;
-	private String estado;
 	
 	
 	public int getId() {
-		return id;
+		return Id;
 	}
 	public void setId(int id) {
-		this.id = id;
+		Id = id;
 	}
 	public String getTitulo() {
-		return titulo;
+		return Titulo;
 	}
 	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+		Titulo = titulo;
 	}
 	public String getIsbn() {
-		return isbn;
+		return Isbn;
 	}
 	public void setIsbn(String isbn) {
-		this.isbn = isbn;
+		Isbn = isbn;
 	}
 	public String getAutor() {
-		return autor;
+		return Autor;
 	}
 	public void setAutor(String autor) {
-		this.autor = autor;
+		Autor = autor;
 	}
 	public int getIdEditorial() {
-		return idEditorial;
+		return IdEditorial;
 	}
 	public void setIdEditorial(int idEditorial) {
-		this.idEditorial = idEditorial;
-	}
-	public String getEditorial() {
-		return editorial;
-	}
-	public void setEditorial(String editorial) {
-		this.editorial = editorial;
+		IdEditorial = idEditorial;
 	}
 	public Date getFechaPublicacion() {
-		return fechaPublicacion;
+		return FechaPublicacion;
 	}
 	public void setFechaPublicacion(Date fechaPublicacion) {
-		this.fechaPublicacion = fechaPublicacion;
-	}
-	public int getEdicion() {
-		return edicion;
-	}
-	public void setEdicion(int edicion) {
-		this.edicion = edicion;
+		FechaPublicacion = fechaPublicacion;
 	}
 	public double getPrecio() {
-		return precio;
+		return Precio;
 	}
 	public void setPrecio(double precio) {
-		this.precio = precio;
+		Precio = precio;
 	}
 	public int getIdCategoria() {
-		return idCategoria;
+		return IdCategoria;
 	}
 	public void setIdCategoria(int idCategoria) {
-		this.idCategoria = idCategoria;
+		IdCategoria = idCategoria;
 	}
-	public String getCategoria() {
-		return categoria;
+	public int getStock() {
+		return Stock;
 	}
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
+	public void setStock(int stock) {
+		Stock = stock;
 	}
 	public int getIdEstado() {
 		return idEstado;
@@ -91,15 +76,8 @@ public class Libro {
 	public void setIdEstado(int idEstado) {
 		this.idEstado = idEstado;
 	}
-	public String getEstado() {
-		return estado;
-	}
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
 	
 	
 	
 	
-
 }

@@ -4,7 +4,7 @@ public class Editorial {
 	
 	private String id;
 	private String editorial;
-	
+
 	public String getId() {
 		return id;
 	}
@@ -17,6 +17,8 @@ public class Editorial {
 	public void setEditorial(String editorial) {
 		this.editorial = editorial;
 	}
+	
+	
 	
 	
 

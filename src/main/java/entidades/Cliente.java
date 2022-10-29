@@ -1,25 +1,26 @@
 package entidades;
 
 public class Cliente {
-	private int id;
-	private int idTipoDocumento;
+	private String id;
+	private String idTipoDocumento;
 	private String tipoDocumento;//
 	private String numeroDocumento;
 	private String nombreCliente;
-	private int idEstado;
+	private String idEstado;
 	private String estado;//
+	private String direccion;
 	
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	public int getIdTipoDocumento() {
+	public String getIdTipoDocumento() {
 		return idTipoDocumento;
 	}
-	public void setIdTipoDocumento(int idTipoDocumento) {
+	public void setIdTipoDocumento(String idTipoDocumento) {
 		this.idTipoDocumento = idTipoDocumento;
 	}
 	public String getTipoDocumento() {
@@ -40,10 +41,10 @@ public class Cliente {
 	public void setNombreCliente(String nombreCliente) {
 		this.nombreCliente = nombreCliente;
 	}
-	public int getIdEstado() {
+	public String getIdEstado() {
 		return idEstado;
 	}
-	public void setIdEstado(int idEstado) {
+	public void setIdEstado(String idEstado) {
 		this.idEstado = idEstado;
 	}
 	public String getEstado() {
@@ -52,6 +53,13 @@ public class Cliente {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+	public String getDireccion() {
+		return direccion;
+	}
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+	
 	
 	
 	
