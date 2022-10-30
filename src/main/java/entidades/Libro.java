@@ -1,25 +1,24 @@
 package entidades;
 
-import java.sql.Date;
-
 public class Libro {
 	
-	private int Id;
+	private String Id;
 	private String Titulo;
 	private String Isbn;
 	private String Autor;
-	private int IdEditorial;
-	private Date FechaPublicacion;
-	private double Precio;
-	private int IdCategoria;
-	private int Stock;
-	private int idEstado;
+	private String IdEditorial;
+	private String FechaPublicacion;
+	private String Precio;
+	private String IdCategoria;
+	private String Stock;
+	private String idEstado;
 	
 	
-	public int getId() {
+	
+	public String getId() {
 		return Id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		Id = id;
 	}
 	public String getTitulo() {
@@ -40,44 +39,42 @@ public class Libro {
 	public void setAutor(String autor) {
 		Autor = autor;
 	}
-	public int getIdEditorial() {
+	public String getIdEditorial() {
 		return IdEditorial;
 	}
-	public void setIdEditorial(int idEditorial) {
+	public void setIdEditorial(String idEditorial) {
 		IdEditorial = idEditorial;
 	}
-	public Date getFechaPublicacion() {
+	public String getFechaPublicacion() {
 		return FechaPublicacion;
 	}
-	public void setFechaPublicacion(Date fechaPublicacion) {
+	public void setFechaPublicacion(String fechaPublicacion) {
 		FechaPublicacion = fechaPublicacion;
 	}
-	public double getPrecio() {
+	public String getPrecio() {
 		return Precio;
 	}
-	public void setPrecio(double precio) {
+	public void setPrecio(String precio) {
 		Precio = precio;
 	}
-	public int getIdCategoria() {
+	public String getIdCategoria() {
 		return IdCategoria;
 	}
-	public void setIdCategoria(int idCategoria) {
+	public void setIdCategoria(String idCategoria) {
 		IdCategoria = idCategoria;
 	}
-	public int getStock() {
+	public String getStock() {
 		return Stock;
 	}
-	public void setStock(int stock) {
+	public void setStock(String stock) {
 		Stock = stock;
 	}
-	public int getIdEstado() {
+	public String getIdEstado() {
 		return idEstado;
 	}
-	public void setIdEstado(int idEstado) {
+	public void setIdEstado(String idEstado) {
 		this.idEstado = idEstado;
 	}
-	
-	
 	
 	
 }
