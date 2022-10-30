@@ -73,12 +73,12 @@ public class LibroServlet extends HttpServlet {
 		String titulo = request.getParameter("txtTitulo");
 		String isbn = request.getParameter("txtIsbn");
 		String autor = request.getParameter("txtAutor");
-		String idEditorial = request.getParameter("txtIdEditorial");
+		String idEditorial = request.getParameter("cboEditorial");
 		String fechaPublicacion = request.getParameter("txtFechaPublicacion");
 		String precio = request.getParameter("txtPrecio");
-		String idCategoria = request.getParameter("txtIdCategoria");
+		String idCategoria = request.getParameter("cboCategoria");
 		String stock = request.getParameter("txtStock");
-		String idEstado = request.getParameter("txtIdEstado");
+		String idEstado = request.getParameter("cboEstado");
 		
 		Libro libro = new Libro();
 		libro.setId(id);
@@ -110,24 +110,24 @@ public class LibroServlet extends HttpServlet {
 		String titulo = request.getParameter("txtTitulo");
 		String isbn = request.getParameter("txtIsbn");
 		String autor = request.getParameter("txtAutor");
-		String idEditorial = request.getParameter("txtIdEditorial");
+		String Editorial = request.getParameter("cboEditorial");
 		String fechaPublicacion = request.getParameter("txtFechaPublicacion");
 		String precio = request.getParameter("txtPrecio");
-		String idCategoria = request.getParameter("txtIdCategoria");
+		String Categoria = request.getParameter("cboCategoria");
 		String stock = request.getParameter("txtStock");
-		String idEstado = request.getParameter("txtIdEstado");
+		String Estado = request.getParameter("cboEstado");
 		
 		Libro libro = new Libro();
 		libro.setId(id);
 		libro.setTitulo(titulo);
 		libro.setIsbn(isbn);
 		libro.setAutor(autor);
-		libro.setIdEditorial(idEditorial);
+		libro.setEditorial(Editorial);
 		libro.setFechaPublicacion(fechaPublicacion);
 		libro.setPrecio(precio);
-		libro.setIdCategoria(idCategoria);
+		libro.setCategoria(Categoria);
 		libro.setStock(stock);
-		libro.setIdEstado(idEstado);
+		libro.setEstado(Estado);
 		
 		DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);
 		LibroInterface dao = daoFactory.getLibro();
