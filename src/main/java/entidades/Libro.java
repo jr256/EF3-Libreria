@@ -7,11 +7,14 @@ public class Libro {
 	private String Isbn;
 	private String Autor;
 	private String IdEditorial;
+	private String Editorial;//
 	private String FechaPublicacion;
 	private String Precio;
 	private String IdCategoria;
+	private String Categoria;//
 	private String Stock;
 	private String idEstado;
+	private String Estado;//
 	
 	
 	
@@ -74,6 +77,24 @@ public class Libro {
 	}
 	public void setIdEstado(String idEstado) {
 		this.idEstado = idEstado;
+	}
+	public String getEditorial() {
+		return Editorial;
+	}
+	public void setEditorial(String editorial) {
+		Editorial = editorial;
+	}
+	public String getCategoria() {
+		return Categoria;
+	}
+	public void setCategoria(String categoria) {
+		Categoria = categoria;
+	}
+	public String getEstado() {
+		return Estado;
+	}
+	public void setEstado(String estado) {
+		Estado = estado;
 	}
 	
 	

@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import entidades.Categoria;
+import entidades.Editorial;
+import entidades.Estado;
 import entidades.Libro;
 import interfaces.LibroInterface;
 import db.MysqlConexion;
@@ -20,8 +23,12 @@ public class LibroModelo implements LibroInterface {
 		ResultSet rst = null;	
 		try {
 			cnn = MysqlConexion.getConexion();
-			String sql = "SELECT Id, Titulo, Isbn, Autor, IdEditorial, FechaPublicacion,"
-					+ "Precio, IdCategoria, Stock, IdEstado FROM libro";
+			String sql = "SELECT lib.Id, lib.Titulo, lib.Isbn, lib.Autor, lib.IdEditorial, ed.Editorial,\r\n"
+					+ "lib.FechaPublicacion, lib.Precio, lib.idCategoria, cat.Categoria, lib.Stock,"
+					+ "lib.idEstado, est.Estado FROM libro as lib \r\n"
+					+ "INNER JOIN editorial as ed ON lib.IdEditorial = ed.Id"
+					+ "INNER JOIN categoira as cat ON lib.IdCategoria = cat.Id"
+					+ "INNER JOIN estado as est ON lib.IdEstado = est.Id";
 			pst = cnn.prepareStatement(sql);
 			rst = pst.executeQuery();
 			
@@ -32,11 +39,14 @@ public class LibroModelo implements LibroInterface {
 				libro.setIsbn(rst.getString("Isbn"));
 				libro.setAutor(rst.getString("Autor"));
 				libro.setIdEditorial(rst.getString("IdEditorial"));
+				libro.setEditorial(rst.getString("Editorial"));
 				libro.setFechaPublicacion(rst.getString("FechaPublicacion"));
 				libro.setPrecio(rst.getString("Precio"));
 				libro.setIdCategoria(rst.getString("IdCategoria"));
+				libro.setCategoria(rst.getString("Categoria"));
 				libro.setStock(rst.getString("Stock"));
 				libro.setIdEstado(rst.getString("IdEstado"));
+				libro.setEstado(rst.getString("Estado"));
 				listaLibro.add(libro);	
 			}			
 		} catch (Exception e) {
@@ -162,8 +172,12 @@ public class LibroModelo implements LibroInterface {
 			ResultSet rst = null;
 			try {
 				cnn = MysqlConexion.getConexion();
-				String mysql = "SELECT Id, Titulo, Isbn, Autor, IdEditorial, FechaPublicacion,"
-						+ "Precio, IdCategoria, Stock, IdEstado FROM libro WHERE Id = ?";
+				String mysql = 	"SELECT lib.Id, lib.Titulo, lib.Isbn, lib.Autor, lib.IdEditorial, ed.Editorial,\r\n"
+				+ "lib.FechaPublicacion, lib.Precio, lib.idCategoria, cat.Categoria, lib.Stock,"
+				+ "lib.idEstado, est.Estado FROM libro as lib \r\n"
+				+ "INNER JOIN editorial as ed ON lib.IdEditorial = ed.Id"
+				+ "INNER JOIN categoira as cat ON lib.IdCategoria = cat.Id"
+				+ "INNER JOIN estado as est ON lib.IdEstado = est.Id WHERE Id = ?";
 				psmt = cnn.prepareStatement(mysql);
 				psmt.setString(1, Id);
 				rst = psmt.executeQuery();
@@ -174,11 +188,14 @@ public class LibroModelo implements LibroInterface {
 					libro.setIsbn(rst.getString("Isbn"));
 					libro.setAutor(rst.getString("Autor"));
 					libro.setIdEditorial(rst.getString("IdEditorial"));
+					libro.setEditorial(rst.getString("Editorial"));
 					libro.setFechaPublicacion(rst.getString("FechaPublicacion"));
 					libro.setPrecio(rst.getString("Precio"));
 					libro.setIdCategoria(rst.getString("IdCategoria"));
+					libro.setCategoria(rst.getString("Categoria"));
 					libro.setStock(rst.getString("Stock"));
 					libro.setIdEstado(rst.getString("IdEstado"));
+					libro.setEstado(rst.getString("Estado"));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -192,6 +209,107 @@ public class LibroModelo implements LibroInterface {
 				}
 			}
 			return libro;
+		}
+		
+		
+		public List<Editorial> listarEditorial() {
+			
+			List<Editorial> listaEditorial = new ArrayList<Editorial>();
+			Connection cnn = null;
+			PreparedStatement pstm = null;
+			ResultSet rs = null;
+			
+			try {
+				cnn = MysqlConexion.getConexion();
+				String sql = "SELECT * FROM editorial";
+				pstm = cnn.prepareStatement(sql);
+				rs = pstm.executeQuery();
+				while (rs.next()) {
+					
+					Editorial editorial = new Editorial();
+					editorial.setId(rs.getString("id"));
+					editorial.setEditorial(rs.getString("editorial"));
+					listaEditorial.add(editorial);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs != null) rs.close();
+					if (pstm != null) pstm.close();
+					if (cnn != null) cnn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return listaEditorial;
+		}
+
+		
+		public List<Categoria> listarCategoria() {
+			
+			List<Categoria> listaCategoria = new ArrayList<Categoria>();
+			Connection cnn = null;
+			PreparedStatement pstm = null;
+			ResultSet rs = null;
+			
+			try {
+				cnn = MysqlConexion.getConexion();
+				String sql = "SELECT * FROM categoria";
+				pstm = cnn.prepareStatement(sql);
+				rs = pstm.executeQuery();
+				while (rs.next()) {
+					
+					Categoria categoria = new Categoria();
+					categoria.setId(rs.getString("id"));
+					categoria.setCategoria(rs.getString("categoria"));
+					listaCategoria.add(categoria);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs != null) rs.close();
+					if (pstm != null) pstm.close();
+					if (cnn != null) cnn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return listaCategoria;
+		}
+		
+		public List<Estado> listarEstado() {
+			
+			List<Estado> listaEstado = new ArrayList<Estado>();
+			Connection cnn = null;
+			PreparedStatement pstm = null;
+			ResultSet rs = null;
+			
+			try {
+				cnn = MysqlConexion.getConexion();
+				String sql = "SELECT * FROM estado";
+				pstm = cnn.prepareStatement(sql);
+				rs = pstm.executeQuery();
+				while (rs.next()) {
+					
+					Estado estado = new Estado();
+					estado.setId(rs.getString("id"));
+					estado.setEstado(rs.getString("estado"));
+					listaEstado.add(estado);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs != null) rs.close();
+					if (pstm != null) pstm.close();
+					if (cnn != null) cnn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return listaEstado;
 		}
 
 }

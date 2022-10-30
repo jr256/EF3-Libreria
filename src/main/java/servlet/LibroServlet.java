@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.DAOFactory;
+import entidades.Categoria;
+import entidades.Editorial;
+import entidades.Estado;
 import entidades.Libro;
 import interfaces.LibroInterface;
 
@@ -34,23 +37,23 @@ public class LibroServlet extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	    	
-	String type = req.getParameter("type");
-	if (type.equals("list")) {
-		listarLibro(req, resp);
-	} else if (type.equals("register")) {    		
-		String Id = req.getParameter("Id");
-		
-		if (Id.isEmpty()) {
-			registrarLibro(req, resp);
-		} else {
-			editarLibro(req, resp);
+		String type = req.getParameter("type");
+		if (type.equals("load")) {
+			configuracionInicial(req, resp);
+		} else if (type.equals("register")) {
+			
+			String Id = req.getParameter("Id");
+			if (Id.isEmpty()) {
+				registrarLibro(req, resp);
+			} else {
+				editarLibro(req, resp);
+			}
+			
+		} else if (type.equals("delete")) {
+			eliminarLibro(req, resp);
+		} else if (type.equals("info")) {
+			getLibro(req, resp);
 		}
-		    		
-	} else if (type.equals("info")) {
-		getLibro(req, resp);    		
-	} else if (type.equals("delete")) {
-		eliminarLibro(req, resp);  		
-	} 
 	    	
 	
 }
@@ -95,7 +98,7 @@ public class LibroServlet extends HttpServlet {
 		
 		int value = dao.registrarLibro(libro);
 		if (value == 1) {
-			listarLibro(request, response);
+			configuracionInicial(request, response);
 		} else {
 			request.setAttribute("mensaje", "Ocurrió un problema");
 			request.getRequestDispatcher("libro.jsp").forward(request, response);
@@ -131,7 +134,7 @@ public class LibroServlet extends HttpServlet {
 		
 		int value = dao.editarLibro(libro);
 		if (value == 1) {
-			listarLibro(request, response);
+			configuracionInicial(request, response);
 		} else {
 			request.setAttribute("mensaje", "Ocurrió un problema");
 			request.getRequestDispatcher("libro.jsp").forward(request, response);
@@ -139,16 +142,19 @@ public class LibroServlet extends HttpServlet {
 	}
 
 	protected void getLibro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("Id");
-	
+		String Id = request.getParameter("Id");
 		DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);
 		LibroInterface dao = daoFactory.getLibro();
-		
-		Libro libro = dao.getLibro(id);
-		List<Libro> data = dao.listarLibros();
-		
-		request.setAttribute("subjectData", libro);
-		request.setAttribute("data", data);
+		Libro libro = dao.getLibro(Id);
+		List<Editorial> editorial = dao.listarEditorial();
+		List<Categoria> categoria = dao.listarCategoria();
+		List<Estado> estado = dao.listarEstado();
+		List<Libro> libros = dao.listarLibros();
+		request.setAttribute("data", editorial);
+		request.setAttribute("dataCategoria", categoria);
+		request.setAttribute("dataEstado", estado);
+		request.setAttribute("dataLibro", libro);
+		request.setAttribute("dataLibros", libros);
 		request.getRequestDispatcher("libro.jsp").forward(request, response);
 	}
 	
@@ -162,7 +168,8 @@ public class LibroServlet extends HttpServlet {
 		if (value == 1) {
 			configuracionInicial(request, response);
 		} else {
-			
+			request.setAttribute("mensaje", "Ocurrió un problema");
+			request.getRequestDispatcher("libro.jsp").forward(request, response);
 		}
 	}
 	
@@ -170,12 +177,16 @@ public class LibroServlet extends HttpServlet {
 		
 		DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);
 		LibroInterface dao = daoFactory.getLibro();
-		List<Libro> data = dao.listarLibros();
+		List<Editorial> data = dao.listarEditorial();
+		List<Categoria> dataCategoria = dao.listarCategoria();
+		List<Estado> dataEstado = dao.listarEstado();
+		List<Libro> dataLibro = dao.listarLibros();
 		
 		req.setAttribute("data", data);
-		req.setAttribute("dataEstudiantes", data);
+		req.setAttribute("dataCategoria", dataCategoria);
+		req.setAttribute("dataEstado", dataEstado);
+		req.setAttribute("dataLibro", dataLibro);
 		req.getRequestDispatcher("libro.jsp").forward(req, resp);
-		
 	}
 
 }
