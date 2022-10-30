@@ -1,11 +1,11 @@
 package dao;
 
+import interfaces.AutenticacionInterface;
 import interfaces.CategoriaInterface;
 import interfaces.ClienteInterface;
-import interfaces.DetalleVentaInterface;
 import interfaces.EditorialInterface;
 import interfaces.LibroInterface;
-import interfaces.VentaInterface;
+import interfaces.UsuarioInterface;
 
 public abstract class DAOFactory {
 	
@@ -13,15 +13,15 @@ public abstract class DAOFactory {
 	public static final int SQLSERVER = 2;
 	public static final int ORACLE = 3;
 	
+	public abstract AutenticacionInterface getAutenticacion();
+	public abstract UsuarioInterface getUsuario();
+	
 	public abstract ClienteInterface getCliente();
 	public abstract LibroInterface getLibro();
 	public abstract EditorialInterface getEditorial();
 	public abstract CategoriaInterface getCategoria();
 	
-	public abstract VentaInterface getVenta();
-	public abstract DetalleVentaInterface getDetalleVenta();
 	
-
 	public static DAOFactory getDaoFactory(int tipo) {
 		
 			switch (tipo) {

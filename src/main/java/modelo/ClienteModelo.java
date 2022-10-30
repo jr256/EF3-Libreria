@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import db.MysqlConexion;
 import entidades.Cliente;
@@ -14,6 +15,8 @@ import interfaces.ClienteInterface;
 
 public class ClienteModelo implements ClienteInterface {
 
+	private static Logger log = Logger.getLogger(Cliente.class.getName());
+	
 	@Override
 	public List<TipoDocumento> listarTipoDocumentos() {
 		
@@ -64,16 +67,16 @@ public class ClienteModelo implements ClienteInterface {
 		try {			
 			
 			con = MysqlConexion.getConexion();			
-			String sql = "SELECT Id,Documento FROM tipo_documento";			
+			String sql = "SELECT Id, Estado FROM estado";			
 			pst = con.prepareStatement(sql);
 			rst = pst.executeQuery();
 			
 			while (rst.next()) {
 				
-				Estado tipoDocumento = new Estado();
-				tipoDocumento.setId(rst.getString("Id"));
-				tipoDocumento.setEstado(rst.getString("Estado"));				
-				listado.add(tipoDocumento);
+				Estado estado = new Estado();
+				estado.setId(rst.getString("Id"));
+				estado.setEstado(rst.getString("Estado"));				
+				listado.add(estado);
 			}
 			
 		} catch (Exception e) {
@@ -106,12 +109,13 @@ public class ClienteModelo implements ClienteInterface {
 			String sql = "INSERT INTO cliente VALUES (null,?,?,?,?,?)";
 			pst = con.prepareStatement(sql);
 			
-			pst.setString(1, cliente.getNombreCliente());
-			pst.setString(2, cliente.getIdTipoDocumento());
-			pst.setString(3, cliente.getNumeroDocumento());
-			pst.setString(4, cliente.getNombreCliente());
-			pst.setString(5, cliente.getIdEstado());
-			pst.setString(6, cliente.getDireccion());
+			pst.setString(1, cliente.getIdTipoDocumento());
+			pst.setString(2, cliente.getNumeroDocumento());
+			pst.setString(3, cliente.getNombreCliente());
+			pst.setString(4, cliente.getIdEstado());
+			pst.setString(5, cliente.getDireccion());
+			
+			log.info("SQL Query de inserción ----> " + pst);
 			
 			envio = pst.executeUpdate();
 			
@@ -270,7 +274,7 @@ public class ClienteModelo implements ClienteInterface {
 			String mysql = "SELECT cli.Id, IdTipoDocumento, tdc.Documento, cli.NumeroDocumento,"
 					+ " cli.Cliente, cli.IdEstado, est.Estado, cli.Direccion FROM cliente AS cli "
 					+ "INNER JOIN tipo_documento AS tdc ON cli.IdTipoDocumento = tdc.Id INNER JOIN "
-					+ "estado AS est ON cli.IdEstado = est.Id WHERE Id = ?;";
+					+ "estado AS est ON cli.IdEstado = est.Id WHERE cli.Id = ?;";
 			pst = con.prepareStatement(mysql);
 			pst.setString(1, idCliente);			
 			rst = pst.executeQuery();
@@ -280,7 +284,7 @@ public class ClienteModelo implements ClienteInterface {
 				cliente = new Cliente();				
 				cliente.setId(rst.getString("Id"));
 				cliente.setIdTipoDocumento(rst.getString("IdTipoDocumento"));
-				cliente.setTipoDocumento(rst.getString("TipoDocumento"));
+				cliente.setTipoDocumento(rst.getString("Documento"));
 				cliente.setNumeroDocumento(rst.getString("NumeroDocumento"));
 				cliente.setNombreCliente(rst.getString("Cliente"));
 				cliente.setIdEstado(rst.getString("IdEstado"));

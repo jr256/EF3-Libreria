@@ -35,7 +35,7 @@ public class ClienteServlet extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String type = request.getParameter("type");
-		if (type.equals("load")) {
+		if (type.equals("list")) {
 			configuracionInicial(request, response);
 		} else if (type.equals("register")) {			
 			String idCliente = request.getParameter("idCliente");
@@ -62,7 +62,7 @@ public class ClienteServlet extends HttpServlet {
 		List<Estado> listadoEstado = dao.listarEstados();
 		List<Cliente> listadoCliente = dao.listarClientes();
 		
-		request.setAttribute("dataTipoDocumento", listadoTipoDoc);
+		request.setAttribute("dataTipoDocumentos", listadoTipoDoc);
 		request.setAttribute("dataEstados", listadoEstado);
 		request.setAttribute("dataClientes", listadoCliente);
 		request.getRequestDispatcher("cliente.jsp").forward(request, response);
@@ -78,10 +78,10 @@ public class ClienteServlet extends HttpServlet {
 		String direccion = request.getParameter("txtDireccion");
 		
 		Cliente cliente = new Cliente();
-		cliente.setTipoDocumento(tipoDocumento);
+		cliente.setIdTipoDocumento(tipoDocumento);
 		cliente.setNumeroDocumento(numeroDocumento);
 		cliente.setNombreCliente(nombreCliente);
-		cliente.setEstado(estadoCliente);
+		cliente.setIdEstado(estadoCliente);
 		cliente.setDireccion(direccion);
 		
 		DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);
@@ -123,7 +123,7 @@ public class ClienteServlet extends HttpServlet {
 		List<Cliente> listadoCliente = dao.listarClientes();
 		
 		request.setAttribute("dataCliente", cliente);
-		request.setAttribute("dataTipoDocumento", listadoTipoDoc);
+		request.setAttribute("dataTipoDocumentos", listadoTipoDoc);
 		request.setAttribute("dataEstados", listadoEstado);
 		request.setAttribute("dataClientes", listadoCliente);
 		request.getRequestDispatcher("cliente.jsp").forward(request, response);

@@ -15,13 +15,17 @@
 
 	<div class="container">
 	
+		<%@ include file="snippet/nav.jsp" %>
+	
+		<br>
+	
 		<% 
 			Categoria categoriaForm = (Categoria) request.getAttribute("categoriadata");
 		%>
 	
-			<div class="col-lg-4">
+			<div class="col-md-4">
 		
-			<h3>Registrar Categoria</h3>
+			<h3>Registrar Categoría</h3>
 			
 			<form action="CategoriaServlet" method="post" id="">
 			
@@ -29,7 +33,7 @@
 				<input type="hidden" name="Id" value="<%=(categoriaForm!=null)? categoriaForm.getId():""%>"> 
 			
 				<div class="form-group">
-				<label>Nombre Categoria</label>
+				<label>Nombre Categoría</label>
 				<input class="form-control" type="text" name="txtNombre"  value="<%=(categoriaForm!=null)? categoriaForm.getCategoria():""%>">
 				</div>
 				
@@ -38,14 +42,14 @@
 			</form>
 		</div>
 		
-		<div class="col-lg-8">
+		<div class="col-md-8">
 
-		<h3>Editoriales Disponibles</h3>
+		<h3>Mantenimiento de Categorías</h3>
 			<table class="table" >
 				<thead>
 					<tr>
 						<th>Id</th>
-						<th>Nombre de la Editorial</th>
+						<th>Nombre de la Categoría</th>
 					</tr>
 				</thead>
 				

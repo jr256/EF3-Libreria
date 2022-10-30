@@ -1,5 +1,11 @@
+<%@page import="util.Constantes"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%
+if (session.getAttribute(Constantes.NAME) == null) {
+	response.sendRedirect("login.jsp");
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,15 +21,16 @@
 	
 		<%@ include file="snippet/nav.jsp" %>
 		<br>
+		<% String name = (String) session.getAttribute(Constantes.NAME); %>
+		<% String lastname = (String) session.getAttribute(Constantes.LASTNAME); %>
 		
-		
-		<div class="col-md-6 ">
-			<h2>Bienvenido!</h2>
-			<h2>Sistema de Gestión de Libreria</h2>		
+		<div class="col-md-5">
+			<h3>Bienvenido <%=name %> <%=lastname %></h3>
+			<h2>Sistema de Gestión de Librería</h2>		
 		</div>
 
-		<div class="col-md-6">
-		  <h2>Proyecto Lenguaje de Programación II</h2>
+		<div class="col-md-7">
+		  <h2>Experiencias Formativas en Situaciones Reales de Trabajo III</h2>
 		  <h2>Integrantes</h2>
 		  <ul>
 		  		<li>Rubio Guerrero, José Antonio</li>

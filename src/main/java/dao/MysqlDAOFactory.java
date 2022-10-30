@@ -1,17 +1,17 @@
 package dao;
 
+import interfaces.AutenticacionInterface;
 import interfaces.CategoriaInterface;
 import interfaces.ClienteInterface;
-import interfaces.DetalleVentaInterface;
 import interfaces.EditorialInterface;
 import interfaces.LibroInterface;
-import interfaces.VentaInterface;
+import interfaces.UsuarioInterface;
+import modelo.AutenticacionModelo;
 import modelo.CategoriaModelo;
 import modelo.ClienteModelo;
-import modelo.DetalleVentaModelo;
 import modelo.EditorialModelo;
 import modelo.LibroModelo;
-import modelo.VentaModelo;
+import modelo.UsuarioModelo;
 
 public class MysqlDAOFactory extends DAOFactory{
 
@@ -19,7 +19,6 @@ public class MysqlDAOFactory extends DAOFactory{
 	public ClienteInterface getCliente() {
 		return new ClienteModelo();
 	}
-
 
 	@Override
 	public LibroInterface getLibro() {
@@ -37,13 +36,13 @@ public class MysqlDAOFactory extends DAOFactory{
 	}
 
 	@Override
-	public VentaInterface getVenta() {
-		return new VentaModelo();
+	public AutenticacionInterface getAutenticacion() {
+		return new AutenticacionModelo();
 	}
 
 	@Override
-	public DetalleVentaInterface getDetalleVenta() {
-		return new DetalleVentaModelo();
+	public UsuarioInterface getUsuario() {
+		return new UsuarioModelo();
 	}
 
 	

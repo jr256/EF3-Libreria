@@ -12,20 +12,24 @@
 	<link rel="stylesheet" href="css/bootstrapValidator.css">
 </head>
 <body>
-
+	
 	<div class="container">
+	
+		<%@ include file="snippet/nav.jsp" %>
+	
+		<br>
 	
 		<% 
 			Editorial editorialForm = (Editorial) request.getAttribute("editorialdata");
 		%>
 	
-			<div class="col-lg-4">
+			<div class="col-md-4">
 		
 			<h3>Registrar Editorial</h3>
 			
 			<form action="EditorialServlet" method="post" id="">
 			
-			<input type="hidden" name="type" value="register">
+				<input type="hidden" name="type" value="register">
 				<input type="hidden" name="Id" value="<%=(editorialForm!=null)? editorialForm.getId():""%>"> 
 			
 				<div class="form-group">
@@ -38,9 +42,9 @@
 			</form>
 		</div>
 		
-		<div class="col-lg-8">
+		<div class="col-md-8">
 
-		<h3>Editoriales Disponibles</h3>
+		<h3>Mantenimiento editorial</h3>
 			<table class="table" >
 				<thead>
 					<tr>
