@@ -10,10 +10,11 @@ if (session.getAttribute(Constantes.NAME) == null) {
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Librería-Inicio</title>
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/bootstrap-theme.css">
 	<link rel="stylesheet" href="css/bootstrapValidator.css">
+	<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 <div class="container">

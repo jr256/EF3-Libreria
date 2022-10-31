@@ -6,10 +6,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Editorial</title>
+<title>Librería-Editorial</title>
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/bootstrap-theme.css">
 	<link rel="stylesheet" href="css/bootstrapValidator.css">
+	<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 	
@@ -50,6 +51,7 @@
 					<tr>
 						<th>Id</th>
 						<th>Nombre de la Editorial</th>
+						<th>Acciones</th>
 					</tr>
 				</thead>
 				
@@ -67,10 +69,10 @@
 				<td><%=item.getEditorial() %></td>
 				<td>
 					<a href="EditorialServlet?type=info&id=<%=item.getId()%>">
-					<img alt="" src="img/ic_info.svg" width="20" height="20" title="Editar">
+						<button class="btn btn-info">Editar</button>
 					</a>
 					<a href="EditorialServlet?type=delete&id=<%=item.getId()%>">
-					<img alt="" src="img/ic_delete.svg" width="20" height="20" title="Eliminar">
+						<button class="btn btn-danger">Eliminar</button>
 					</a>
 				</td>
 			</tr>

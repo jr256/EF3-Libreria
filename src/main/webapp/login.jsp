@@ -4,11 +4,12 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Librería</title>
+<title>Librería-Login</title>
 
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/bootstrap-theme.css">
 <link rel="stylesheet" href="css/bootstrapValidator.css">
+<link rel="stylesheet" href="css/styles.css">
 
 </head>
 <body>
@@ -16,11 +17,17 @@
 <div class="container">
 	<br>
 	<br>
+	<h1>Sistema de Gestión de Librería</h1>
+	<br>
+	<div class="col-md-6">
+		<img alt="" src="img/portada.png" width="80%" height="280" title="Portada">
+	</div>
+	
 	<div class="col-md-6">
 		<form action="InicioSesionServlet" method="post" id="id_form">
 			
 			<input type="hidden" name="type" value="login">
-			<h1>Sistema de Gestión de Librería</h1>
+			
 			<h2>Iniciar sesión</h2>
 			<br>
 			<div class="form-group">
@@ -53,6 +60,8 @@
 	</div>
 		
 
+	
+	
 </div>
 
 </body>

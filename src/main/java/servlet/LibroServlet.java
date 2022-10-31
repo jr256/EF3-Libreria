@@ -38,10 +38,9 @@ public class LibroServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 	    	
 		String type = req.getParameter("type");
-		if (type.equals("load")) {
+		if (type.equals("list")) {
 			configuracionInicial(req, resp);
 		} else if (type.equals("register")) {
-			
 			String Id = req.getParameter("Id");
 			if (Id.isEmpty()) {
 				registrarLibro(req, resp);
@@ -52,20 +51,28 @@ public class LibroServlet extends HttpServlet {
 		} else if (type.equals("delete")) {
 			eliminarLibro(req, resp);
 		} else if (type.equals("info")) {
-			getLibro(req, resp);
+			obtenerLibro(req, resp);
 		}
 	    	
 	
 }
-
-	protected void listarLibro (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	
+	protected void configuracionInicial(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);
 		LibroInterface dao = daoFactory.getLibro();
 		
-		List<Libro> data = dao.listarLibros();
-		request.setAttribute("data", data);
-		request.getRequestDispatcher("libro.jsp").forward(request, response);
+		List<Editorial> dataEditorial = dao.listarEditorial();
+		List<Categoria> dataCategoria = dao.listarCategoria();
+		List<Estado> dataEstado = dao.listarEstado();
+		List<Libro> dataLibro = dao.listarLibros();
+		
+		req.setAttribute("dataEditorial", dataEditorial);
+		req.setAttribute("dataCategoria", dataCategoria);
+		req.setAttribute("dataEstado", dataEstado);
+		req.setAttribute("dataLibros", dataLibro);//
+		req.getRequestDispatcher("libro.jsp").forward(req, resp);
 	}
 	
 	protected void registrarLibro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -105,29 +112,51 @@ public class LibroServlet extends HttpServlet {
 		}
 	}
 
+	
+	
+	protected void obtenerLibro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String Id = request.getParameter("id");
+		DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);
+		LibroInterface dao = daoFactory.getLibro();
+		Libro libro = dao.obtenerLibro(Id);
+		
+		List<Editorial> editorial = dao.listarEditorial();
+		List<Categoria> categoria = dao.listarCategoria();
+		List<Estado> estado = dao.listarEstado();
+		List<Libro> librosL = dao.listarLibros();
+		
+		request.setAttribute("dataLibro", libro);
+		request.setAttribute("dataEditorial", editorial);
+		request.setAttribute("dataCategoria", categoria);
+		request.setAttribute("dataEstado", estado);		
+		request.setAttribute("dataLibros", librosL);
+		request.getRequestDispatcher("libro.jsp").forward(request, response);
+	}
+	
+
 	protected void editarLibro (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("txtId");
+		String id = request.getParameter("Id");
 		String titulo = request.getParameter("txtTitulo");
 		String isbn = request.getParameter("txtIsbn");
 		String autor = request.getParameter("txtAutor");
-		String Editorial = request.getParameter("cboEditorial");
+		String Editorial = request.getParameter("cboEditorial");//
 		String fechaPublicacion = request.getParameter("txtFechaPublicacion");
 		String precio = request.getParameter("txtPrecio");
-		String Categoria = request.getParameter("cboCategoria");
+		String Categoria = request.getParameter("cboCategoria");//
 		String stock = request.getParameter("txtStock");
-		String Estado = request.getParameter("cboEstado");
+		String Estado = request.getParameter("cboEstado");//
 		
 		Libro libro = new Libro();
 		libro.setId(id);
 		libro.setTitulo(titulo);
 		libro.setIsbn(isbn);
 		libro.setAutor(autor);
-		libro.setEditorial(Editorial);
+		libro.setIdEditorial(Editorial);
 		libro.setFechaPublicacion(fechaPublicacion);
 		libro.setPrecio(precio);
-		libro.setCategoria(Categoria);
+		libro.setIdCategoria(Categoria);
 		libro.setStock(stock);
-		libro.setEstado(Estado);
+		libro.setIdEstado(Estado);
 		
 		DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);
 		LibroInterface dao = daoFactory.getLibro();
@@ -141,22 +170,7 @@ public class LibroServlet extends HttpServlet {
 		}
 	}
 
-	protected void getLibro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String Id = request.getParameter("Id");
-		DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);
-		LibroInterface dao = daoFactory.getLibro();
-		Libro libro = dao.getLibro(Id);
-		List<Editorial> editorial = dao.listarEditorial();
-		List<Categoria> categoria = dao.listarCategoria();
-		List<Estado> estado = dao.listarEstado();
-		List<Libro> libros = dao.listarLibros();
-		request.setAttribute("data", editorial);
-		request.setAttribute("dataCategoria", categoria);
-		request.setAttribute("dataEstado", estado);
-		request.setAttribute("dataLibro", libro);
-		request.setAttribute("dataLibros", libros);
-		request.getRequestDispatcher("libro.jsp").forward(request, response);
-	}
+
 	
 	protected void eliminarLibro (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -173,20 +187,6 @@ public class LibroServlet extends HttpServlet {
 		}
 	}
 	
-	protected void configuracionInicial(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);
-		LibroInterface dao = daoFactory.getLibro();
-		List<Editorial> data = dao.listarEditorial();
-		List<Categoria> dataCategoria = dao.listarCategoria();
-		List<Estado> dataEstado = dao.listarEstado();
-		List<Libro> dataLibro = dao.listarLibros();
-		
-		req.setAttribute("data", data);
-		req.setAttribute("dataCategoria", dataCategoria);
-		req.setAttribute("dataEstado", dataEstado);
-		req.setAttribute("dataLibro", dataLibro);
-		req.getRequestDispatcher("libro.jsp").forward(req, resp);
-	}
+
 
 }

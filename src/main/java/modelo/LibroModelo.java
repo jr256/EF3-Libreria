@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import entidades.Categoria;
+import entidades.Cliente;
 import entidades.Editorial;
 import entidades.Estado;
 import entidades.Libro;
@@ -15,6 +17,7 @@ import db.MysqlConexion;
 
 public class LibroModelo implements LibroInterface {
 
+	private static Logger log = Logger.getLogger(Cliente.class.getName());
 	public List<Libro> listarLibros() {
 		
 		List<Libro> listaLibro = new ArrayList<Libro>();
@@ -23,11 +26,11 @@ public class LibroModelo implements LibroInterface {
 		ResultSet rst = null;	
 		try {
 			cnn = MysqlConexion.getConexion();
-			String sql = "SELECT lib.Id, lib.Titulo, lib.Isbn, lib.Autor, lib.IdEditorial, ed.Editorial,\r\n"
+			String sql = "SELECT lib.Id, lib.Titulo, lib.Isbn, lib.Autor, lib.IdEditorial, ed.Editorial,"
 					+ "lib.FechaPublicacion, lib.Precio, lib.idCategoria, cat.Categoria, lib.Stock,"
-					+ "lib.idEstado, est.Estado FROM libro as lib \r\n"
-					+ "INNER JOIN editorial as ed ON lib.IdEditorial = ed.Id"
-					+ "INNER JOIN categoira as cat ON lib.IdCategoria = cat.Id"
+					+ "lib.idEstado, est.Estado FROM libro as lib "
+					+ "INNER JOIN editorial as ed ON lib.IdEditorial = ed.Id "
+					+ "INNER JOIN categoria as cat ON lib.IdCategoria = cat.Id "
 					+ "INNER JOIN estado as est ON lib.IdEstado = est.Id";
 			pst = cnn.prepareStatement(sql);
 			rst = pst.executeQuery();
@@ -65,14 +68,14 @@ public class LibroModelo implements LibroInterface {
 	}
 	
 	
-		public int registrarLibro(Libro libro) {
+	public int registrarLibro(Libro libro) {
 		
 		int book = 0;
 		Connection cnn = null;
 		PreparedStatement pst = null;
 		try {
 			cnn = MysqlConexion.getConexion();
-			String sql = "INSERT INTO libro VALUES (null,?,?,?,null,?,?,null, null, null)";
+			String sql = "INSERT INTO libro VALUES (null,?,?,?,?,?,?,?,?,?)";
 			pst = cnn.prepareStatement(sql);
 			
 			pst.setString(1, libro.getTitulo());
@@ -100,7 +103,7 @@ public class LibroModelo implements LibroInterface {
 	}
 
 		
-		public int editarLibro (Libro libro) {
+	public int editarLibro (Libro libro) {
 			
 			int libros = 0;
 			Connection cnn = null;
@@ -121,7 +124,10 @@ public class LibroModelo implements LibroInterface {
 				pstm.setString(7, libro.getIdCategoria());
 				pstm.setString(8, libro.getStock());
 				pstm.setString(9, libro.getIdEstado());
-				pstm.setString(10, libro.getId());				
+				pstm.setString(10, libro.getId());		
+				
+				log.info("SQL Query de actualización ----> " + pstm);
+				
 				libros = pstm.executeUpdate();
 				
 			} catch (Exception e) {
@@ -138,7 +144,7 @@ public class LibroModelo implements LibroInterface {
 		}
 
 		
-		public int eliminarLibro(String Id) {
+	public int eliminarLibro(String Id) {
 			
 			int libros = 0;
 			Connection cnn = null;
@@ -165,21 +171,22 @@ public class LibroModelo implements LibroInterface {
 		}
 
 		
-		public Libro getLibro (String Id) {
+	public Libro obtenerLibro (String Id) {
 			Libro libro = null;
 			Connection cnn = null;
 			PreparedStatement psmt = null;
 			ResultSet rst = null;
 			try {
 				cnn = MysqlConexion.getConexion();
-				String mysql = 	"SELECT lib.Id, lib.Titulo, lib.Isbn, lib.Autor, lib.IdEditorial, ed.Editorial,\r\n"
+				String mysql = 	"SELECT lib.Id, lib.Titulo, lib.Isbn, lib.Autor, lib.IdEditorial, ed.Editorial,"
 				+ "lib.FechaPublicacion, lib.Precio, lib.idCategoria, cat.Categoria, lib.Stock,"
-				+ "lib.idEstado, est.Estado FROM libro as lib \r\n"
-				+ "INNER JOIN editorial as ed ON lib.IdEditorial = ed.Id"
-				+ "INNER JOIN categoira as cat ON lib.IdCategoria = cat.Id"
-				+ "INNER JOIN estado as est ON lib.IdEstado = est.Id WHERE Id = ?";
+				+ "lib.idEstado, est.Estado FROM libro as lib "
+				+ "INNER JOIN editorial as ed ON lib.IdEditorial = ed.Id "
+				+ "INNER JOIN categoria as cat ON lib.IdCategoria = cat.Id "
+				+ "INNER JOIN estado as est ON lib.IdEstado = est.Id WHERE lib.Id = ?";
 				psmt = cnn.prepareStatement(mysql);
 				psmt.setString(1, Id);
+				log.info("SQL Query de consulta ----> " + psmt);
 				rst = psmt.executeQuery();
 				if(rst.next()) {
 					libro = new Libro();
@@ -212,7 +219,7 @@ public class LibroModelo implements LibroInterface {
 		}
 		
 		
-		public List<Editorial> listarEditorial() {
+	public List<Editorial> listarEditorial() {
 			
 			List<Editorial> listaEditorial = new ArrayList<Editorial>();
 			Connection cnn = null;
@@ -227,8 +234,8 @@ public class LibroModelo implements LibroInterface {
 				while (rs.next()) {
 					
 					Editorial editorial = new Editorial();
-					editorial.setId(rs.getString("id"));
-					editorial.setEditorial(rs.getString("editorial"));
+					editorial.setId(rs.getString("Id"));
+					editorial.setEditorial(rs.getString("Editorial"));
 					listaEditorial.add(editorial);
 				}
 			} catch (Exception e) {
@@ -246,7 +253,7 @@ public class LibroModelo implements LibroInterface {
 		}
 
 		
-		public List<Categoria> listarCategoria() {
+	public List<Categoria> listarCategoria() {
 			
 			List<Categoria> listaCategoria = new ArrayList<Categoria>();
 			Connection cnn = null;
@@ -261,8 +268,8 @@ public class LibroModelo implements LibroInterface {
 				while (rs.next()) {
 					
 					Categoria categoria = new Categoria();
-					categoria.setId(rs.getString("id"));
-					categoria.setCategoria(rs.getString("categoria"));
+					categoria.setId(rs.getString("Id"));
+					categoria.setCategoria(rs.getString("Categoria"));
 					listaCategoria.add(categoria);
 				}
 			} catch (Exception e) {
@@ -279,7 +286,7 @@ public class LibroModelo implements LibroInterface {
 			return listaCategoria;
 		}
 		
-		public List<Estado> listarEstado() {
+	public List<Estado> listarEstado() {
 			
 			List<Estado> listaEstado = new ArrayList<Estado>();
 			Connection cnn = null;
@@ -294,8 +301,8 @@ public class LibroModelo implements LibroInterface {
 				while (rs.next()) {
 					
 					Estado estado = new Estado();
-					estado.setId(rs.getString("id"));
-					estado.setEstado(rs.getString("estado"));
+					estado.setId(rs.getString("Id"));
+					estado.setEstado(rs.getString("Estado"));
 					listaEstado.add(estado);
 				}
 			} catch (Exception e) {

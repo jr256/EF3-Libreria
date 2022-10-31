@@ -96,20 +96,7 @@ public class ClienteServlet extends HttpServlet {
 				
 	}
 	
-	protected void eliminarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String id = request.getParameter("id");
-		DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);
-		ClienteInterface dao = daoFactory.getCliente();
 		
-		int value = dao.eliminarCliente(id);
-		if (value == 1) {
-			configuracionInicial(request, response);
-		} else {
-			
-		}
-	}
-	
 	
 	protected void obtenerCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		
@@ -141,10 +128,10 @@ public class ClienteServlet extends HttpServlet {
 		
 		Cliente cliente = new Cliente();
 		cliente.setId(id);
-		cliente.setTipoDocumento(tipoDocumento);
+		cliente.setIdTipoDocumento(tipoDocumento);
 		cliente.setNumeroDocumento(numeroDocumento);
 		cliente.setNombreCliente(nombreCliente);
-		cliente.setEstado(estadoCliente);
+		cliente.setIdEstado(estadoCliente);
 		cliente.setDireccion(direccion);
 		
 		DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);
@@ -156,6 +143,20 @@ public class ClienteServlet extends HttpServlet {
 		} else {
 			request.setAttribute("mensaje", "Ocurrió un problema");
 			request.getRequestDispatcher("cliente.jsp").forward(request, response);
+		}
+	}
+	
+	protected void eliminarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String id = request.getParameter("id");
+		DAOFactory daoFactory = DAOFactory.getDaoFactory(DAOFactory.MYSQL);
+		ClienteInterface dao = daoFactory.getCliente();
+		
+		int value = dao.eliminarCliente(id);
+		if (value == 1) {
+			configuracionInicial(request, response);
+		} else {
+			
 		}
 	}
 

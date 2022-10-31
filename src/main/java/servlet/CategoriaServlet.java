@@ -137,8 +137,5 @@ public class CategoriaServlet extends HttpServlet {
 	
 	
 	
-	
-	
-	
 
 }

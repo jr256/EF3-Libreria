@@ -240,7 +240,8 @@ public class ClienteModelo implements ClienteInterface {
 			pst.setString(4, cliente.getIdEstado());
 			pst.setString(5, cliente.getDireccion());
 			pst.setString(6, cliente.getId());
-						
+			
+			log.info("SQL Query de actualización ----> " + pst);
 			envio = pst.executeUpdate();
 			
 		} catch (Exception e) {

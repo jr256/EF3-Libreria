@@ -13,7 +13,7 @@ public interface LibroInterface {
 	
 	public int registrarLibro (Libro libro);
 	
-	public Libro getLibro(String Id);
+	public Libro obtenerLibro(String Id);
 	
 	public int editarLibro (Libro libro);
 	
