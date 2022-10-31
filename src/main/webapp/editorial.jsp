@@ -28,7 +28,7 @@
 		
 			<h3>Registrar Editorial</h3>
 			
-			<form action="EditorialServlet" method="post" id="">
+			<form action="EditorialServlet" method="post" id="id_form">
 			
 				<input type="hidden" name="type" value="register">
 				<input type="hidden" name="Id" value="<%=(editorialForm!=null)? editorialForm.getId():""%>"> 

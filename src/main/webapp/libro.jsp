@@ -31,7 +31,7 @@
 				List<Estado> listarEstado = (List<Estado>) request.getAttribute("dataEstado");
 				Libro LibroForm = (Libro) request.getAttribute("dataLibro");
 			%>
-			<form action="LibroServlet" method="post">
+			<form action="LibroServlet" method="post" id="id_form">
 			
 			
 				<input type="hidden" name="type" value="register">
@@ -114,7 +114,7 @@
 				
 					<div class="form-group">
 						<label>Stock</label>
-						<input class="form-control" placeholder="0" type="text" name="txtStock" 
+						<input class="form-control" placeholder="0" type="number" name="txtStock" 
 						value="<%=(LibroForm!=null)?LibroForm.getStock():"" %>">
 					</div>
 					
@@ -223,4 +223,102 @@
 	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/bootstrapValidator.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$('#id_form').bootstrapValidator({
+		feedbackIcons: {
+			valid: 'glyphicon glyphicon-ok',
+			invalid: 'glyphicon glyphicon-remove',
+			validating: 'glyphicon glyphicon-refresh'
+		},
+		fields: {
+			txtTitulo: {
+				validators: {
+					notEmpty: {
+						message: "El campo es obligatorio"
+					},
+					stringLength: {
+		                min: 4,
+		                max: 50,
+		                message: 'El titulo debe ser entre 4 hasta 50 caracteres'
+		            }
+					
+				}
+			},
+			
+			txtIsbn: {
+				validators: {
+					notEmpty: {
+						message: "El campo es obligatorio"
+					},
+					stringLength: {
+		                min: 10,
+		                max: 15,
+		                message: 'El ISBN debe ser entre 10 hasta 15 caracteres'
+		            }
+				}
+			},
+			
+			txtAutor: {
+				validators: {
+					notEmpty: {
+						message: "El campo es obligatorio"
+					},
+					stringLength: {
+		                min: 4,
+		                max: 45,
+		                message: 'El ISBN debe ser entre 4 hasta 45 caracteres'
+		            }
+				}
+			},
+			
+			txtFechaPublicacion: {
+				validators: {
+					notEmpty: {
+						message: "El campo es obligatorio"
+					},
+				    date: {
+	                        format: 'YYYY-MM-DD',
+	                        message: 'El formato de fecha debe ser AAAA-MM-DD'
+	                }
+				}
+			},
+			
+		
+				
+			txtStock: {
+				validators: {
+					notEmpty: {
+						message: "El campo es obligatorio"
+					},
+				    integer: {
+                        message: 'El valor no es un entero'
+                	}					
+				}						
+			},
+			
+			
+			txtPrecio: {
+				validators: {
+					notEmpty: {
+						message: "El campo es obligatorio"
+					},
+				    numeric: {
+				    	separator: '.',
+                        message: 'El valor no es numero'
+                	}	
+				}						
+			}
+		}
+	});
+	
+	$('#validateBtn').click(function(){
+		$('#id_form').bootstrapValidator('validate');
+	});
+	
+});
+
+
+</script>
 </html>

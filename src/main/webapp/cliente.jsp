@@ -33,7 +33,7 @@
 			List<Estado> listaEstados = (List<Estado>) request.getAttribute("dataEstados");
 			Cliente clienteForm = (Cliente) request.getAttribute("dataCliente");
 		%>
-		<form action="ClienteServlet" method="post">
+		<form action="ClienteServlet" method="post" id="id_form">
 		
 			<input type="hidden" name="type" value="register">
 			<input type="hidden" name="idCliente" value="<%=(clienteForm!=null)? clienteForm.getId():""%>">
@@ -185,6 +185,66 @@
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/bootstrapValidator.js"></script>
+<script type="text/javascript">
 
+$(document).ready(function(){
+	$('#id_form').bootstrapValidator({
+		feedbackIcons: {
+			valid: 'glyphicon glyphicon-ok',
+			invalid: 'glyphicon glyphicon-remove',
+			validating: 'glyphicon glyphicon-refresh'
+		},
+		fields: {
+			txtNumeroDocumento: {
+				validators: {
+					notEmpty: {
+						message: "El campo es obligatorio"
+					},
+					stringLength: {
+		                min: 4,
+		                max: 25,
+		                message: 'El nombre debe ser entre 5 hasta 25 caracteres'
+		            }
+					
+				}
+			},
+			
+			txtNombreCliente: {
+				validators: {
+					notEmpty: {
+						message: "El campo es obligatorio"
+					},
+					stringLength: {
+		                min: 4,
+		                max: 45,
+		                message: 'El apellido debe ser entre 4 hasta 45 caracteres'
+		            }
+				}
+			},
+						
+				
+			txtDireccion: {
+				validators: {
+					notEmpty: {
+						message: "El campo es obligatorio"
+					},
+					stringLength: {
+		                min: 4,
+		                max: 100,
+		                message: 'El apellido debe ser entre 4 hasta 100 caracteres'
+		            }
+				}						
+			}
+		}
+	});
+	
+	$('#validateBtn').click(function(){
+		$('#id_form').bootstrapValidator('validate');
+	});
+	
+});
+
+
+</script>
 
 </html>
