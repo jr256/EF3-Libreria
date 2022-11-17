@@ -28,14 +28,14 @@ public class LibroServlet extends HttpServlet {
      */
     public LibroServlet() {
         super();
-        // TODO Auto-generated constructor stub
+      
     }
 
 	/**
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 	    	
 		String type = req.getParameter("type");
 		if (type.equals("list")) {
@@ -71,7 +71,7 @@ public class LibroServlet extends HttpServlet {
 		req.setAttribute("dataEditorial", dataEditorial);
 		req.setAttribute("dataCategoria", dataCategoria);
 		req.setAttribute("dataEstado", dataEstado);
-		req.setAttribute("dataLibros", dataLibro);//
+		req.setAttribute("dataLibros", dataLibro);
 		req.getRequestDispatcher("libro.jsp").forward(req, resp);
 	}
 	
@@ -82,9 +82,9 @@ public class LibroServlet extends HttpServlet {
 		String autor = request.getParameter("txtAutor");
 		String idEditorial = request.getParameter("cboEditorial");
 		String fechaPublicacion = request.getParameter("txtFechaPublicacion");
-		String precio = request.getParameter("txtPrecio");
+		double precio = Double.parseDouble(request.getParameter("txtPrecio"));
 		String idCategoria = request.getParameter("cboCategoria");
-		String stock = request.getParameter("txtStock");
+		int stock = Integer.parseInt(request.getParameter("txtStock"));
 		String idEstado = request.getParameter("cboEstado");
 		
 		Libro libro = new Libro();
@@ -139,12 +139,12 @@ public class LibroServlet extends HttpServlet {
 		String titulo = request.getParameter("txtTitulo");
 		String isbn = request.getParameter("txtIsbn");
 		String autor = request.getParameter("txtAutor");
-		String Editorial = request.getParameter("cboEditorial");//
+		String Editorial = request.getParameter("cboEditorial");
 		String fechaPublicacion = request.getParameter("txtFechaPublicacion");
-		String precio = request.getParameter("txtPrecio");
-		String Categoria = request.getParameter("cboCategoria");//
-		String stock = request.getParameter("txtStock");
-		String Estado = request.getParameter("cboEstado");//
+		double precio = Double.parseDouble(request.getParameter("txtPrecio"));
+		String Categoria = request.getParameter("cboCategoria");
+		int stock = Integer.parseInt(request.getParameter("txtStock"));
+		String Estado = request.getParameter("cboEstado");
 		
 		Libro libro = new Libro();
 		libro.setId(id);

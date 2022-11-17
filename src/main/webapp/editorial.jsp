@@ -45,7 +45,7 @@
 		
 		<div class="col-md-8">
 
-		<h3>Mantenimiento editorial</h3>
+		<h3>Mantenimiento de editorial</h3>
 			<table class="table" >
 				<thead>
 					<tr>
@@ -98,4 +98,41 @@
 	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/bootstrapValidator.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$('#id_form').bootstrapValidator({
+		feedbackIcons: {
+			valid: 'glyphicon glyphicon-ok',
+			invalid: 'glyphicon glyphicon-remove',
+			validating: 'glyphicon glyphicon-refresh'
+		},
+		fields: {
+			txtNombre: {
+				validators: {
+					notEmpty: {
+						message: "El campo es obligatorio"
+					},
+					stringLength: {
+		                min: 4,
+		                max: 45,
+		                message: 'El nombre debe ser entre 4 hasta 45 caracteres'
+		            }
+					
+				}
+			}
+			
+			
+		}
+	});
+	
+	$('#validateBtn').click(function(){
+		$('#id_form').bootstrapValidator('validate');
+	});
+	
+});
+
+
+</script>
+	
 </html>

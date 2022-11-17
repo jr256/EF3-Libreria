@@ -20,9 +20,9 @@ public class AutenticacionModelo implements AutenticacionInterface  {
 		
 		try {			
 			con = MysqlConexion.getConexion();			
-			String mysql = "SELECT Id,Nombres,Apellidos,Correo FROM usuario WHERE Correo=? AND Clave=?";				
+			String mysql = "CALL usp_Usuario_Autenticacion(?,?)";				
 				
-			pst = con.prepareStatement(mysql);
+			pst = con.prepareCall(mysql);
 			pst.setString(1, correo);
 			pst.setString(2, clave);			
 			rst = pst.executeQuery();

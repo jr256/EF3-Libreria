@@ -18,6 +18,8 @@ import db.MysqlConexion;
 public class LibroModelo implements LibroInterface {
 
 	private static Logger log = Logger.getLogger(Cliente.class.getName());
+	
+	
 	public List<Libro> listarLibros() {
 		
 		List<Libro> listaLibro = new ArrayList<Libro>();
@@ -26,13 +28,8 @@ public class LibroModelo implements LibroInterface {
 		ResultSet rst = null;	
 		try {
 			cnn = MysqlConexion.getConexion();
-			String sql = "SELECT lib.Id, lib.Titulo, lib.Isbn, lib.Autor, lib.IdEditorial, ed.Editorial,"
-					+ "lib.FechaPublicacion, lib.Precio, lib.idCategoria, cat.Categoria, lib.Stock,"
-					+ "lib.idEstado, est.Estado FROM libro as lib "
-					+ "INNER JOIN editorial as ed ON lib.IdEditorial = ed.Id "
-					+ "INNER JOIN categoria as cat ON lib.IdCategoria = cat.Id "
-					+ "INNER JOIN estado as est ON lib.IdEstado = est.Id";
-			pst = cnn.prepareStatement(sql);
+			String sql = "CALL usp_Libro_ListarTodos";
+			pst = cnn.prepareCall(sql);
 			rst = pst.executeQuery();
 			
 			while(rst.next()) {
@@ -44,10 +41,10 @@ public class LibroModelo implements LibroInterface {
 				libro.setIdEditorial(rst.getString("IdEditorial"));
 				libro.setEditorial(rst.getString("Editorial"));
 				libro.setFechaPublicacion(rst.getString("FechaPublicacion"));
-				libro.setPrecio(rst.getString("Precio"));
+				libro.setPrecio(rst.getDouble("Precio"));
 				libro.setIdCategoria(rst.getString("IdCategoria"));
 				libro.setCategoria(rst.getString("Categoria"));
-				libro.setStock(rst.getString("Stock"));
+				libro.setStock(rst.getInt("Stock"));
 				libro.setIdEstado(rst.getString("IdEstado"));
 				libro.setEstado(rst.getString("Estado"));
 				listaLibro.add(libro);	
@@ -75,17 +72,17 @@ public class LibroModelo implements LibroInterface {
 		PreparedStatement pst = null;
 		try {
 			cnn = MysqlConexion.getConexion();
-			String sql = "INSERT INTO libro VALUES (null,?,?,?,?,?,?,?,?,?)";
-			pst = cnn.prepareStatement(sql);
+			String sql = "CALL usp_Libro_Insertar(?,?,?,?,?,?,?,?,?)";
+			pst = cnn.prepareCall(sql);
 			
 			pst.setString(1, libro.getTitulo());
 			pst.setString(2, libro.getIsbn());
 			pst.setString(3, libro.getAutor());
 			pst.setString(4, libro.getIdEditorial());
 			pst.setString(5, libro.getFechaPublicacion());
-			pst.setString(6, libro.getPrecio());
+			pst.setDouble(6, libro.getPrecio());
 			pst.setString(7, libro.getIdCategoria());
-			pst.setString(8, libro.getStock());
+			pst.setInt(8, libro.getStock());
 			pst.setString(9, libro.getIdEstado());
 			
 			book = pst.executeUpdate();	
@@ -110,19 +107,17 @@ public class LibroModelo implements LibroInterface {
 			PreparedStatement pstm = null;
 			try {
 				cnn = MysqlConexion.getConexion();
-				String sql = "UPDATE libro SET Titulo = ?, Isbn = ?, Autor = ?"
-						+ ", IdEditorial = ?, FechaPublicacion = ?,"
-						+ "Precio = ?, IdCategoria = ?, Stock = ?, IdEstado = ? WHERE Id = ?";
+				String sql = "CALL usp_Libro_Actualizar(?,?,?,?,?,?,?,?,?,?)";
 				
-				pstm = cnn.prepareStatement(sql);
+				pstm = cnn.prepareCall(sql);
 				pstm.setString(1, libro.getTitulo());
 				pstm.setString(2, libro.getIsbn());
 				pstm.setString(3, libro.getAutor());
 				pstm.setString(4, libro.getIdEditorial());
 				pstm.setString(5, libro.getFechaPublicacion());
-				pstm.setString(6, libro.getPrecio());
+				pstm.setDouble(6, libro.getPrecio());
 				pstm.setString(7, libro.getIdCategoria());
-				pstm.setString(8, libro.getStock());
+				pstm.setInt(8, libro.getStock());
 				pstm.setString(9, libro.getIdEstado());
 				pstm.setString(10, libro.getId());		
 				
@@ -152,8 +147,8 @@ public class LibroModelo implements LibroInterface {
 			
 			try {
 				cnn = MysqlConexion.getConexion();
-				String sql = "DELETE FROM libro WHERE Id = ?";
-				pstm = cnn.prepareStatement(sql);
+				String sql = "CALL usp_Libro_Eliminar(?)";
+				pstm = cnn.prepareCall(sql);
 				pstm.setString(1, Id);
 				libros = pstm.executeUpdate();
 				
@@ -178,13 +173,8 @@ public class LibroModelo implements LibroInterface {
 			ResultSet rst = null;
 			try {
 				cnn = MysqlConexion.getConexion();
-				String mysql = 	"SELECT lib.Id, lib.Titulo, lib.Isbn, lib.Autor, lib.IdEditorial, ed.Editorial,"
-				+ "lib.FechaPublicacion, lib.Precio, lib.idCategoria, cat.Categoria, lib.Stock,"
-				+ "lib.idEstado, est.Estado FROM libro as lib "
-				+ "INNER JOIN editorial as ed ON lib.IdEditorial = ed.Id "
-				+ "INNER JOIN categoria as cat ON lib.IdCategoria = cat.Id "
-				+ "INNER JOIN estado as est ON lib.IdEstado = est.Id WHERE lib.Id = ?";
-				psmt = cnn.prepareStatement(mysql);
+				String mysql = "CALL usp_Libro_BuscarPorId(?)";
+				psmt = cnn.prepareCall(mysql);
 				psmt.setString(1, Id);
 				log.info("SQL Query de consulta ----> " + psmt);
 				rst = psmt.executeQuery();
@@ -197,10 +187,10 @@ public class LibroModelo implements LibroInterface {
 					libro.setIdEditorial(rst.getString("IdEditorial"));
 					libro.setEditorial(rst.getString("Editorial"));
 					libro.setFechaPublicacion(rst.getString("FechaPublicacion"));
-					libro.setPrecio(rst.getString("Precio"));
+					libro.setPrecio(rst.getDouble("Precio"));
 					libro.setIdCategoria(rst.getString("IdCategoria"));
 					libro.setCategoria(rst.getString("Categoria"));
-					libro.setStock(rst.getString("Stock"));
+					libro.setStock(rst.getInt("Stock"));
 					libro.setIdEstado(rst.getString("IdEstado"));
 					libro.setEstado(rst.getString("Estado"));
 				}

@@ -22,8 +22,8 @@ public class EditorialModelo implements EditorialInterface {
 		try {
 			
 			con = MysqlConexion.getConexion();
-			String sql = "insert into editorial values(null, ?)";
-			pst = con.prepareStatement(sql);
+			String sql = "CALL usp_Editorial_Insertar(?)";
+			pst = con.prepareCall(sql);
 			
 			pst.setString(1, editorial.getEditorial());
 	
@@ -51,9 +51,9 @@ public class EditorialModelo implements EditorialInterface {
 		
 		try {
 			cn = MysqlConexion.getConexion();
-			String mySql = "update editorial set Editorial = ? where Id = ?";
+			String mySql = "CALL usp_Editorial_Actualizar(?,?)";
 			
-			pstm = cn.prepareStatement(mySql);
+			pstm = cn.prepareCall(mySql);
 			pstm.setString(1, editorial.getEditorial());
 			pstm.setString(2, editorial.getId());
 			
@@ -81,8 +81,8 @@ public class EditorialModelo implements EditorialInterface {
 		try {	
 			cn = MysqlConexion.getConexion();
 			
-			String sql = "delete from editorial where Id = ?";
-			pstm = cn.prepareStatement(sql);
+			String sql = "CALL usp_Editorial_Eliminar(?)";
+			pstm = cn.prepareCall(sql);
 			pstm.setString(1, idEditorial);
 			
 			salida = pstm.executeUpdate();
@@ -94,7 +94,7 @@ public class EditorialModelo implements EditorialInterface {
 				if (pstm != null) pstm.close();
 				if (cn != null) cn.close();
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.getStackTrace();
 			}
 		}		
 		return salida;
@@ -109,8 +109,8 @@ public class EditorialModelo implements EditorialInterface {
 		
 		try {
 			cn = MysqlConexion.getConexion();
-			String sql = "select Id, Editorial from editorial";
-			pstm = cn.prepareStatement(sql);
+			String sql = "CALL usp_Editorial_ListarTodos";
+			pstm = cn.prepareCall(sql);
 			rs = pstm.executeQuery();
 			
 			while (rs.next()) {
@@ -147,8 +147,8 @@ public class EditorialModelo implements EditorialInterface {
 		try {
 			
 			con = MysqlConexion.getConexion();
-			String sql = "select * from editorial where id = ?";
-			pst = con.prepareStatement(sql);
+			String sql = "CALL usp_Editorial_BuscarPorId(?)";
+			pst = con.prepareCall(sql);
 			pst.setString(1, idEditorial);
 			
 			

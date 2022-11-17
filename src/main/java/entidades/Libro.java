@@ -2,75 +2,84 @@ package entidades;
 
 public class Libro {
 	
-	private String Id;
-	private String Titulo;
-	private String Isbn;
-	private String Autor;
-	private String IdEditorial;
-	private String Editorial;//
-	private String FechaPublicacion;
-	private String Precio;
-	private String IdCategoria;
-	private String Categoria;//
-	private String Stock;
+	private String id;
+	private String titulo;
+	private String isbn;
+	private String autor;
+	private String idEditorial;
+	private String editorial;//
+	private String fechaPublicacion;
+	private double precio;
+	private String idCategoria;
+	private String categoria;//
+	private int stock;
 	private String idEstado;
-	private String Estado;//
-	
-	
-	
+	private String estado;//
 	public String getId() {
-		return Id;
+		return id;
 	}
 	public void setId(String id) {
-		Id = id;
+		this.id = id;
 	}
 	public String getTitulo() {
-		return Titulo;
+		return titulo;
 	}
 	public void setTitulo(String titulo) {
-		Titulo = titulo;
+		this.titulo = titulo;
 	}
 	public String getIsbn() {
-		return Isbn;
+		return isbn;
 	}
 	public void setIsbn(String isbn) {
-		Isbn = isbn;
+		this.isbn = isbn;
 	}
 	public String getAutor() {
-		return Autor;
+		return autor;
 	}
 	public void setAutor(String autor) {
-		Autor = autor;
+		this.autor = autor;
 	}
 	public String getIdEditorial() {
-		return IdEditorial;
+		return idEditorial;
 	}
 	public void setIdEditorial(String idEditorial) {
-		IdEditorial = idEditorial;
+		this.idEditorial = idEditorial;
+	}
+	public String getEditorial() {
+		return editorial;
+	}
+	public void setEditorial(String editorial) {
+		this.editorial = editorial;
 	}
 	public String getFechaPublicacion() {
-		return FechaPublicacion;
+		return fechaPublicacion;
 	}
 	public void setFechaPublicacion(String fechaPublicacion) {
-		FechaPublicacion = fechaPublicacion;
+		this.fechaPublicacion = fechaPublicacion;
 	}
-	public String getPrecio() {
-		return Precio;
+	public double getPrecio() {
+		return precio;
 	}
-	public void setPrecio(String precio) {
-		Precio = precio;
+	public void setPrecio(double precio) {
+		this.precio = precio;
 	}
 	public String getIdCategoria() {
-		return IdCategoria;
+		return idCategoria;
 	}
 	public void setIdCategoria(String idCategoria) {
-		IdCategoria = idCategoria;
+		this.idCategoria = idCategoria;
 	}
-	public String getStock() {
-		return Stock;
+	public String getCategoria() {
+		return categoria;
 	}
-	public void setStock(String stock) {
-		Stock = stock;
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+	public int getStock() {
+		return stock;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 	public String getIdEstado() {
 		return idEstado;
@@ -78,24 +87,16 @@ public class Libro {
 	public void setIdEstado(String idEstado) {
 		this.idEstado = idEstado;
 	}
-	public String getEditorial() {
-		return Editorial;
-	}
-	public void setEditorial(String editorial) {
-		Editorial = editorial;
-	}
-	public String getCategoria() {
-		return Categoria;
-	}
-	public void setCategoria(String categoria) {
-		Categoria = categoria;
-	}
 	public String getEstado() {
-		return Estado;
+		return estado;
 	}
 	public void setEstado(String estado) {
-		Estado = estado;
+		this.estado = estado;
 	}
+	
+	
+	
+		
 	
 	
 }

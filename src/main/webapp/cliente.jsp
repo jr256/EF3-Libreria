@@ -120,7 +120,7 @@
 	</div>
 
 	<div class="col-md-12">
-		<h3>Mantenedor Clientes</h3>
+		<h3>Mantenimiento de clientes</h3>
 		
 		<table class="table">
 			<thead>

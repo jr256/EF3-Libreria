@@ -22,8 +22,8 @@ public class UsuarioModelo implements UsuarioInterface {
 		try {			
 			
 			con = MysqlConexion.getConexion();			
-			String sql = "INSERT INTO usuario VALUES (null, ?, ?, ?, ?)";
-			pst = con.prepareStatement(sql);
+			String sql = "CALL usp_Usuario_Insertar(?, ?, ?, ?)";
+			pst = con.prepareCall(sql);
 			
 			pst.setString(1,usuario.getNombres());
 			pst.setString(2,usuario.getApellidos());
@@ -56,8 +56,8 @@ public class UsuarioModelo implements UsuarioInterface {
 		
 		try {			
 			con = MysqlConexion.getConexion();			
-			String sql = "SELECT Id,Nombres,Apellidos,Correo,Clave FROM usuario";			
-			pst = con.prepareStatement(sql);
+			String sql = "CALL usp_Usuario_ListarTodos";			
+			pst = con.prepareCall(sql);
 			rst = pst.executeQuery();
 			
 			while (rst.next()) {				

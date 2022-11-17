@@ -106,8 +106,8 @@ public class ClienteModelo implements ClienteInterface {
 		try {
 			
 			con = MysqlConexion.getConexion();
-			String sql = "INSERT INTO cliente VALUES (null,?,?,?,?,?)";
-			pst = con.prepareStatement(sql);
+			String sql = "CALL usp_Cliente_Insertar(?,?,?,?,?)";
+			pst = con.prepareCall(sql);
 			
 			pst.setString(1, cliente.getIdTipoDocumento());
 			pst.setString(2, cliente.getNumeroDocumento());
@@ -147,12 +147,9 @@ public class ClienteModelo implements ClienteInterface {
 		try {
 			
 			con = MysqlConexion.getConexion();			
-			String sql = "SELECT cli.Id, IdTipoDocumento, tdc.Documento, cli.NumeroDocumento,"
-					+ " cli.Cliente, cli.IdEstado, est.Estado, cli.Direccion FROM cliente AS cli "
-					+ "INNER JOIN tipo_documento AS tdc ON cli.IdTipoDocumento = tdc.Id INNER JOIN "
-					+ "estado AS est ON cli.IdEstado = est.Id;";
+			String sql = "CALL usp_Cliente_ListarTodos";
 						
-			pst = con.prepareStatement(sql);
+			pst = con.prepareCall(sql);
 			rst = pst.executeQuery();
 			
 			while (rst.next()) {
@@ -199,8 +196,8 @@ public class ClienteModelo implements ClienteInterface {
 		try {
 			
 			con = MysqlConexion.getConexion();			
-			String sql = "DELETE FROM cliente WHERE Id = ?";
-			pst = con.prepareStatement(sql);
+			String sql = "CALL usp_Cliente_Eliminar(?)";
+			pst = con.prepareCall(sql);
 			pst.setString(1, idCliente);			
 			envio = pst.executeUpdate();
 						
@@ -230,9 +227,8 @@ public class ClienteModelo implements ClienteInterface {
 		try {
 			
 			con = MysqlConexion.getConexion();			
-			String mysql = "UPDATE cliente SET IdTipoDocumento = ?, NumeroDocumento = ?, "
-					+ "Cliente = ?, IdEstado = ?, Direccion = ? WHERE Id = ?";
-			pst = con.prepareStatement(mysql);
+			String mysql = "CALL usp_Cliente_Actualizar(?,?,?,?,?,?)";
+			pst = con.prepareCall(mysql);
 			
 			pst.setString(1, cliente.getIdTipoDocumento());
 			pst.setString(2, cliente.getNumeroDocumento());
@@ -272,11 +268,8 @@ public class ClienteModelo implements ClienteInterface {
 		try {
 			
 			con = MysqlConexion.getConexion();
-			String mysql = "SELECT cli.Id, IdTipoDocumento, tdc.Documento, cli.NumeroDocumento,"
-					+ " cli.Cliente, cli.IdEstado, est.Estado, cli.Direccion FROM cliente AS cli "
-					+ "INNER JOIN tipo_documento AS tdc ON cli.IdTipoDocumento = tdc.Id INNER JOIN "
-					+ "estado AS est ON cli.IdEstado = est.Id WHERE cli.Id = ?;";
-			pst = con.prepareStatement(mysql);
+			String mysql = "CALL usp_Cliente_BuscarPorId(?)";
+			pst = con.prepareCall(mysql);
 			pst.setString(1, idCliente);			
 			rst = pst.executeQuery();
 			

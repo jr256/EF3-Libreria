@@ -57,7 +57,7 @@
 	</div>
 
 	<div class="col-md-8">
-		<h3>Listado de Usuarios</h3>
+		<h3>Listado de usuarios</h3>
 		
 		<table class="table">
 			<thead>

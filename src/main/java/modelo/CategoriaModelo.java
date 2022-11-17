@@ -21,8 +21,8 @@ public class CategoriaModelo implements CategoriaInterface {
 		try {
 			
 			con = MysqlConexion.getConexion();
-			String sql = "insert into categoria values(null, ?)";
-			pst = con.prepareStatement(sql);
+			String sql = "CALL usp_Categoria_Insertar(?)";
+			pst = con.prepareCall(sql);
 			
 			pst.setString(1, categoria.getCategoria());
 	
@@ -50,9 +50,9 @@ public class CategoriaModelo implements CategoriaInterface {
 		
 		try {
 			cn = MysqlConexion.getConexion();
-			String mySql = "update categoria set Categoria = ? where Id = ?";
+			String mySql = "CALL usp_Categoria_Actualizar(?,?)";
 			
-			pstm = cn.prepareStatement(mySql);
+			pstm = cn.prepareCall(mySql);
 			pstm.setString(1, categoria.getCategoria());
 			pstm.setString(2, categoria.getId());
 			
@@ -80,8 +80,8 @@ public class CategoriaModelo implements CategoriaInterface {
 		try {	
 			cn = MysqlConexion.getConexion();
 			
-			String sql = "delete from categoria where Id = ?";
-			pstm = cn.prepareStatement(sql);
+			String sql = "CALL usp_Categoria_Eliminar(?)";
+			pstm = cn.prepareCall(sql);
 			pstm.setString(1, idCategoria);
 			
 			salida = pstm.executeUpdate();
@@ -93,7 +93,7 @@ public class CategoriaModelo implements CategoriaInterface {
 				if (pstm != null) pstm.close();
 				if (cn != null) cn.close();
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.getStackTrace();
 			}
 		}		
 		return salida;
@@ -108,8 +108,8 @@ public class CategoriaModelo implements CategoriaInterface {
 		
 		try {
 			cn = MysqlConexion.getConexion();
-			String sql = "select Id, Categoria from categoria";
-			pstm = cn.prepareStatement(sql);
+			String sql = "CALL usp_Categoria_ListarTodos";
+			pstm = cn.prepareCall(sql);
 			rs = pstm.executeQuery();
 			
 			while (rs.next()) {
@@ -147,8 +147,8 @@ public class CategoriaModelo implements CategoriaInterface {
 		try {
 			
 			con = MysqlConexion.getConexion();
-			String sql = "select * from categoria where id = ?";
-			pst = con.prepareStatement(sql);
+			String sql = "CALL usp_Categoria_BuscarPorId(?)";
+			pst = con.prepareCall(sql);
 			pst.setString(1, idCategoria);
 			
 			
